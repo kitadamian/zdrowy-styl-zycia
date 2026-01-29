@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zdrowy Styl Życia</title>
+  <meta name="description" content="Interaktywna strona promująca sport, zdrową dietę i aktywny tryb życia. Sprawdź BMI, przepisy i porady zdrowotne." />
+  <style>
+    :root {
+      --green: #2ecc71;
+      --dark: #1e272e;
+      --light: #f5f6fa;
+      --bg: var(--light);
+      --text: var(--dark);
+      --card: #ffffff;
+    }
+    body.dark {
+      --bg: #121212;
+      --text: #f5f6fa;
+      --card: #1e1e1e;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background .3s, color .3s;
+    }
+    header {
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    section {
+      padding: 2rem 1rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    h2 {
+      margin-top: 0;
+      color: #27ae60;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+      transition: background .3s;
+    }
+    input, button {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      background: var(--green);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: .2s;
+    }
+    button:hover { opacity: .9; }
+    .toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: #00000055;
+      color: #fff;
+      border: none;
+      padding: .6rem 1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+    }
+    footer {
+      background: #1e272e;
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+    }
+    footer a { color: #2ecc71; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<button class="toggle" onclick="toggleDark()">🌙 / ☀️</button>
+<header>
+  <h1>Zdrowy Styl Życia</h1>
+  <p>Małe kroki. Wielkie zmiany. Ciało Ci podziękuje.</p>
+</header>
+
+<section>
+  <h2>Dlaczego warto?</h2>
+  <div class="grid">
+    <div class="card">🏃‍♂️ Regularna aktywność fizyczna zmniejsza ryzyko chorób serca, cukrzycy i depresji.</div>
+    <div class="card">🥗 Zdrowa dieta poprawia koncentrację, sen i odporność.</div>
+    <div class="card">🧠 Ruch to paliwo dla mózgu – potwierdzone przez WHO i EFSA.</div>
+  </div>
+</section>
+
+<section>
+  <h2>Kalkulator BMI</h2>
+  <div class="card">
+    <label>Wzrost (cm)</label>
+    <input type="number" id="height" placeholder="np. 180" />
+    <label>Waga (kg)</label>
+    <input type="number" id="weight" placeholder="np. 75" />
+    <button onclick="calculateBMI()">Oblicz BMI</button>
+    <p id="bmiResult"></p>
+  </div>
+</section>
+
+<section>
+  <h2>Zdrowe przepisy (inspiracje)</h2>
+  <div class="grid">
+    <div class="card">🥑 Owsianka z jogurtem naturalnym, owocami i orzechami</div>
+    <div class="card">🍗 Kurczak pieczony + kasza bulgur + warzywa</div>
+    <div class="card">🥕 Zupa krem z marchewki i imbiru</div>
+    <div class="card">🐟 Łosoś pieczony + brokuł + ryż brązowy</div>
+  </div>
+</section>
+
+<section>
+  <h2>Rekomendacje zdrowotne</h2>
+  <div class="card">
+    <ul>
+      <li>Minimum 150 minut umiarkowanej aktywności tygodniowo (WHO)</li>
+      <li>5 porcji warzyw i owoców dziennie (WHO)</li>
+      <li>Ograniczenie cukru i żywności wysoko przetworzonej</li>
+      <li>Sen: 7–9 godzin dziennie</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p>Autor: <strong>Damian Kita</strong></p>
+  <p><a href="https://linktr.ee/kitadamian" target="_blank">linktr.ee/kitadamian</a></p>
+  <p>Źródła: WHO, EFSA, Narodowy Instytut Zdrowia Publicznego</p>
+</footer>
+
+<script>
+  function calculateBMI() {
+    const h = document.getElementById('height').value / 100;
+    const w = document.getElementById('weight').value;
+    if (!h || !w) return;
+    const bmi = (w / (h * h)).toFixed(1);
+    let desc = '';
+    if (bmi < 18.5) desc = 'Niedowaga';
+    else if (bmi < 25) desc = 'Prawidłowa masa ciała';
+    else if (bmi < 30) desc = 'Nadwaga';
+    else desc = 'Otyłość';
+    document.getElementById('bmiResult').innerText = `Twoje BMI: ${bmi} (${desc})`;
+  }
+
+  function toggleDark() {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+  }
+
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark');
+  }
+</script>
+
+</body>
+</html>
